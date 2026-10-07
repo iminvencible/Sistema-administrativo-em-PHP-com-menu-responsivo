@@ -45,3 +45,12 @@ jobs:
           python3 tests/integration.py
       - name: Capturar a interface e a impressão para revisão
         run: python3 tests/visual.py
+      - name: Disponibilizar capturas para revisão
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-oficina
+          path: |
+            tests/results/*.png
+            tests/results/*.pdf
+          if-no-files-found: error
+          retention-days: 14

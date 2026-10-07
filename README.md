@@ -75,6 +75,7 @@ Um serviço sem peças é permitido quando tem descrição e mão de obra maior 
 | `config/` | Exemplo de configuração e arquivo local ignorado. |
 | `database/` | DDL relacional e seed opcional. |
 | `tests/integration.py` | Testes HTTP com banco MySQL real e biblioteca padrão Python. |
+| `tests/visual.py` | Capturas da interface e impressão real com o Chrome do runner. |
 | `.github/workflows/php.yml` | Verificação de sintaxe e testes de integração no GitHub Actions. |
 
 Os formulários continuam funcionando sem JavaScript; nesse caso, a venda usa uma linha de peça e a impressão pode ser feita com Ctrl+P. O tema é aplicado pelo servidor e permanece ao navegar/recarregar. Após sair, a nova sessão começa com as preferências padrão.
@@ -94,6 +95,8 @@ O projeto demonstra sessões, mas **não possui login de operadores nem controle
 ## Testes
 
 O GitHub Actions cria um banco descartável com MySQL 8.0 e executa a aplicação PHP. Os testes verificam os seis módulos, a ponte A–F, rotas inválidas, CRUD, validações, CSRF, escape HTML, ordens de serviço, venda com baixa de estoque, rollback por saldo insuficiente, histórico, datas, tema persistente e saída segura.
+
+O workflow também gera capturas em 390px e 1440px e uma impressão PDF no Chrome. Elas ficam no artefato `capturas-oficina` da execução por 14 dias, para revisão visual. Todos os dados das capturas vêm do banco descartável de testes.
 
 Para executar localmente, use somente um banco de teste descartável, importe o esquema e o seed, inicie o PHP na porta 8000 e execute:
 

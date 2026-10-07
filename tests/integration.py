@@ -1,8 +1,5 @@
 """Testes HTTP com MySQL real. Execute somente em banco descartável."""
 import hashlib
-import base64
-import gzip
-import json
 import http.cookiejar
 import os
 from pathlib import Path
@@ -183,8 +180,6 @@ print('OK: confirmação, cookie removido, sessão destruída e dados preservado
 print('Todos os testes passaram.')
 if os.environ.get('TEST_CAPTURE_UI') == '1':
     # HTML renderizado pelo PHP, com dados do banco descartável, para revisão visual.
-    compressed = gzip.compress(json.dumps(snapshots).encode())
-    print('UI_SNAPSHOTS:' + base64.b64encode(compressed).decode())
     destination = Path(__file__).parent / 'results'
     destination.mkdir(exist_ok=True)
     for name, html in snapshots.items():

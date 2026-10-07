@@ -1,6 +1,4 @@
 """Captura HTML real dos testes com Chrome, sem dependências da aplicação."""
-import base64
-import json
 from pathlib import Path
 import shutil
 import subprocess
@@ -31,7 +29,7 @@ for name, width, height in cases:
                    '--window-size=' + str(width) + ',' + str(height),
                    '--screenshot=' + str(output), (results / name).as_uri()]
         subprocess.run(command, check=True, capture_output=True, timeout=30)
-    print('UI_IMAGE:' + output.name + ':' + base64.b64encode(output.read_bytes()).decode())
+    print('Captura gerada: ' + output.name)
 
 # Renderizar uma impressão real, com o CSS @media print.
 pdf = results / 'vendas-impressao.pdf'
@@ -41,5 +39,5 @@ with tempfile.TemporaryDirectory() as profile:
                     '--virtual-time-budget=1000', '--no-pdf-header-footer',
                     '--print-to-pdf=' + str(pdf), (results / 'vendas-claro.html').as_uri()],
                    check=True, capture_output=True, timeout=30)
-print('UI_PDF:' + base64.b64encode(pdf.read_bytes()).decode())
+print('Impressão gerada: ' + pdf.name)
 print('OK: capturas de desktop, mobile, tema escuro e impressão geradas.')
