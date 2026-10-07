@@ -1,0 +1,45 @@
+name: PHP e MySQL
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-24.04
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci-only
+          MYSQL_DATABASE: oficina_motos
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -pci-only"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: oficina_motos
+      DB_USER: root
+      DB_PASSWORD: ci-only
+      MYSQL_PWD: ci-only
+      TEST_CAPTURE_UI: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conferir extensões e sintaxe PHP
+        run: |
+          php -r 'foreach (["pdo_mysql", "mbstring"] as $ext) { if (!extension_loaded($ext)) { fwrite(STDERR, "Extensão ausente: $ext\n"); exit(1); } }'
+          find . -name '*.php' -print0 | xargs -0 -n1 php -l
+          node --check app.js
+      - name: Criar banco e executar testes HTTP
+        run: |
+          mysql -h 127.0.0.1 -u root < database/schema.sql
+          mysql -h 127.0.0.1 -u root < database/seed.sql
+          php -S 127.0.0.1:8000 > /tmp/oficina-php.log 2>&1 &
+          servidor=$!
+          trap 'kill "$servidor"; cat /tmp/oficina-php.log' EXIT
+          python3 tests/integration.py

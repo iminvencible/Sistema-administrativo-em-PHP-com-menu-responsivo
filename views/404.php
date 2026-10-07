@@ -1,0 +1,1 @@
+<div class="empty-state"><p class="eyebrow">ERRO 404</p><h2>Esta opção não existe</h2><p>Selecione um dos seis módulos ou volte ao painel da oficina.</p><a class="button" href="index.php">Voltar ao painel</a></div>

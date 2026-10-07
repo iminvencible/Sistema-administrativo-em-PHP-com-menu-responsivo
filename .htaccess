@@ -1,0 +1,5 @@
+# Apache 2.4: somente a interface pública deve ser servida.
+Options -Indexes
+<FilesMatch "\.(sql|log|py)$">
+    Require all denied
+</FilesMatch>
