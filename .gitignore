@@ -1,0 +1,4 @@
+/config/database.local.php
+/tests/results/
+*.log
+__pycache__/

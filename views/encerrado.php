@@ -1,0 +1,1 @@
+<div class="logout-panel"><span class="logout-symbol" aria-hidden="true">✓</span><p class="eyebrow">ATÉ O PRÓXIMO ATENDIMENTO</p><h2>Sessão encerrada com segurança</h2><p>Os dados salvos continuam disponíveis. Volte ao painel para iniciar uma nova sessão.</p><a class="button" href="index.php">Voltar ao painel</a></div>
