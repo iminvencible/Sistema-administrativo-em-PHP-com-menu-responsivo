@@ -5,6 +5,7 @@ import gzip
 import json
 import http.cookiejar
 import os
+from pathlib import Path
 import re
 import subprocess
 import time
@@ -184,3 +185,7 @@ if os.environ.get('TEST_CAPTURE_UI') == '1':
     # HTML renderizado pelo PHP, com dados do banco descartável, para revisão visual.
     compressed = gzip.compress(json.dumps(snapshots).encode())
     print('UI_SNAPSHOTS:' + base64.b64encode(compressed).decode())
+    destination = Path(__file__).parent / 'results'
+    destination.mkdir(exist_ok=True)
+    for name, html in snapshots.items():
+        (destination / name).write_text(html, encoding='utf-8')

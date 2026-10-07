@@ -43,3 +43,5 @@ jobs:
           servidor=$!
           trap 'kill "$servidor"; cat /tmp/oficina-php.log' EXIT
           python3 tests/integration.py
+      - name: Capturar a interface e a impressão para revisão
+        run: python3 tests/visual.py
